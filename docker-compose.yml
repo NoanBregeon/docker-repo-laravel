@@ -4,12 +4,11 @@ name: compose-laravel-eval
 
 services:
   mysql:
-    container_name: laravel-app
-    image: julespecquereau/laravel-eval:latest
+    container_name: laravel-mysql
+    image: mysql:latest
     environment:
-      
-      DbProvider: mysql
-      ConnectionStrings__DefaultConnection: Server=laravel-mysql;Database=produit;Username=root;Password=Not24get;
+      MYSQL_ROOT_PASSWORD: Not24get
+      MYSQL_DATABASE: produit
     ports:
       - "3306:3306"
     
@@ -18,11 +17,11 @@ services:
     networks:
       - compose-network
   laravel-app:
-    container_name: laravel-mysql
-    image: mysql:latest
+    container_name: laravel-app
+    image: julespecquereau/laravel-eval:latest
     environment:
-      MYSQL_ROOT_PASSWORD: Not24get
-      MYSQL_DATABASE: produit
+      DbProvider: mysql
+      ConnectionStrings__DefaultConnection: Server=laravel-mysql;Database=produit;Username=root;Password=Not24get;
     ports:
       - "8095:8080"
     networks:
