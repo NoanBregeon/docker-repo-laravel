@@ -1,0 +1,32 @@
+#docker-compose.yml for Laravel and MySQL setup
+
+name: compose-laravel-eval
+
+services:
+  mysql:
+    container_name: laravel-app
+    image: julespecquereau/laravel-eval:latest
+    environment:
+      
+      DbProvider: mysql
+      ConnectionStrings__DefaultConnection: Server=laravel-mysql;Database=produit;Username=root;Password=Not24get;
+    ports:
+      - "3306:3306"
+    
+    volumes:
+      - ./init-mysql.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - compose-network
+  laravel-app:
+    container_name: laravel-mysql
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Not24get
+      MYSQL_DATABASE: produit
+    ports:
+      - "8095:8080"
+    networks:
+      - compose-network
+networks:
+  compose-network:
+    name: compose-network-name
