@@ -7,7 +7,7 @@ on:
 jobs:
   # ÉTAPE 1 : Validation du code Laravel (CI)
   test-app:
-    name: 🧪 Laravel Unit Tests
+    name: Laravel Unit Tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -39,7 +39,7 @@ jobs:
 
   # ÉTAPE 2 : Construction de l'image Docker (seulement si le test passe)
   build-docker:
-    name: 🐳 Docker Build & Push
+    name: Docker Build & Push
     runs-on: ubuntu-latest
     needs: [test-app] 
     
