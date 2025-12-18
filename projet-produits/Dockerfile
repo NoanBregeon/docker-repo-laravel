@@ -4,7 +4,7 @@ FROM php:8.4-alpine
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 WORKDIR /laravel
 COPY . .
-COPY .env .env
+COPY .env.example .env
 RUN docker-php-ext-install pdo pdo_mysql
 RUN composer update
 RUN chmod +x docker-entrypoint.sh
