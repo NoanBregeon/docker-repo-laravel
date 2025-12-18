@@ -5,9 +5,9 @@ on:
     branches: [ "main" ]
 
 jobs:
-  # ÉTAPE 1 : Validation du code Laravel
+  # ÉTAPE 1 : Validation du code Laravel (CI)
   test-app:
-    name: Laravel Unit Tests
+    name: 🧪 Laravel Unit Tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -20,29 +20,28 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
-          extensions: mbstring, dom, curl, sqlite
+          extensions: mbstring, dom, curl, sqlite, pdo_sqlite
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Create .env file from Secret
-        run: echo "${{ secrets.DOT_ENV }}" > .env
+      - name: Create .env for testing
+        # On crée un .env minimal pour que Laravel ne cherche pas MySQL durant les tests
+        run: |
+          echo "APP_KEY=base64:u689u9v6Y7Y7986V876v876v876v876v876v876v876=" > .env
+          echo "DB_CONNECTION=sqlite" >> .env
+          echo "DB_DATABASE=:memory:" >> .env
 
       - name: Run Tests
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: ":memory:"
-          # On force une clé de test ICI, elle écrasera celle du .env juste pour cette commande
-          APP_KEY: base64:u689u9v6Y7Y7986V876v876v876v876v876v876v876=
         run: |
           php artisan migrate --force
           php artisan test
 
   # ÉTAPE 2 : Construction de l'image Docker (seulement si le test passe)
   build-docker:
-    name: Docker Build & Push
+    name: 🐳 Docker Build & Push
     runs-on: ubuntu-latest
-    needs: [test-app] # <--- Sécurité : si le test échoue, on ne build pas
+    needs: [test-app] 
     
     steps:
       - uses: actions/checkout@v4
@@ -56,7 +55,8 @@ jobs:
       - name: Build and Push
         uses: docker/build-push-action@v5
         with:
+          # On définit le contexte sur le dossier du projet
           context: ./projet-produits
-          file: ./projet-produits/Dockerfile # Vérifie le chemin du Dockerfile de ton binôme
+          file: ./projet-produits/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:latest
