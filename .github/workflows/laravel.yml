@@ -25,11 +25,15 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist
 
+      - name: Create .env file from Secret
+        run: echo "${{ secrets.DOT_ENV }}" > .env
+
       - name: Run Tests
         env:
           DB_CONNECTION: sqlite
-          DB_DATABASE: ":memory:" # Plus simple pour les tests rapides
+          DB_DATABASE: ":memory:"
         run: |
+          # Maintenant que le fichier existe, key:generate peut écrire dedans
           php artisan key:generate
           php artisan test
 
