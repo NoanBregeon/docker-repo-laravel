@@ -1,4 +1,3 @@
-
 #!/bin/sh
 # Met à jour les images Docker avant de démarrer
 docker-compose pull
