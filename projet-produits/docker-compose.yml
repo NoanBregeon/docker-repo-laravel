@@ -15,7 +15,7 @@ services:
       - compose-network
   laravel-app:
     container_name: laravel-app
-    image: julespecquereau/laravel-app:test
+    image: julespecquereau/laravel-app:latest
     ports:
       - "8095:8080"
     networks:
