@@ -11,14 +11,11 @@ services:
       MYSQL_DATABASE: produits
     ports:
       - "3306:3306"
-    
-    volumes:
-      - ./init-mysql.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - compose-network
   laravel-app:
     container_name: laravel-app
-    image: julespecquereau/laravel-eval:latest
+    image: julespecquereau/laravel-eval:test
     environment:
       DbProvider: mysql
       ConnectionStrings__DefaultConnection: Server=laravel-mysql;Database=produits;Username=root;Password=Not24get;
