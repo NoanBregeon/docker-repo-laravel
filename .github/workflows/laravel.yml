@@ -1,46 +1,57 @@
-name: Laravel CI
+name: Pipeline Laravel & Docker
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
-  laravel-tests:
+  # ÉTAPE 1 : Validation du code Laravel
+  test-app:
+    name: 🧪 Laravel Unit Tests
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./projet-produits
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, dom, curl, sqlite
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.3' # Mis à jour pour ta version
-        extensions: mbstring, dom, curl, libxml, mysql, sqlite
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist
 
-    - name: Create .env from Secret
-      run: echo "${{ secrets.DOT_ENV }}" > .env
+      - name: Run Tests
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:" # Plus simple pour les tests rapides
+        run: |
+          php artisan key:generate
+          php artisan test
 
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --prefer-dist
+  # ÉTAPE 2 : Construction de l'image Docker (seulement si le test passe)
+  build-docker:
+    name: 🐳 Docker Build & Push
+    runs-on: ubuntu-latest
+    needs: [test-app] # <--- Sécurité : si le test échoue, on ne build pas
+    
+    steps:
+      - uses: actions/checkout@v4
 
-    - name: Generate key
-      run: php artisan key:generate
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
-
-    - name: Create SQLite Database for Tests
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
-
-    - name: Execute tests
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: php artisan test
+      - name: Build and Push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile # Vérifie le chemin du Dockerfile de ton binôme
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:latest
