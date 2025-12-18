@@ -65,11 +65,10 @@ jobs:
   github-runner:
     name: Github runner 
     runs-on: self-hosted
-    needs: dockerhub
+    needs: build-docker
     steps: 
       - name: Checkout
         uses: actions/checkout@v4
       - name: docker compose up
         working-directory: ./projet-produits
         run: docker compose up -d 
-        
