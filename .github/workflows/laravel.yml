@@ -59,7 +59,7 @@ jobs:
           context: ./projet-produits
           file: ./projet-produits/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:latest
+          tags: julespecquereau/laravel-app:latest
 
   
   github-runner:
