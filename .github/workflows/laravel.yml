@@ -32,9 +32,10 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: ":memory:"
+          # On force une clé de test ICI, elle écrasera celle du .env juste pour cette commande
+          APP_KEY: base64:u689u9v6Y7Y7986V876v876v876v876v876v876v876=
         run: |
-          # Maintenant que le fichier existe, key:generate peut écrire dedans
-          php artisan key:generate
+          php artisan migrate --force
           php artisan test
 
   # ÉTAPE 2 : Construction de l'image Docker (seulement si le test passe)
