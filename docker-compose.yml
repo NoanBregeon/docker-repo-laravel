@@ -21,7 +21,7 @@ services:
     image: julespecquereau/laravel-eval:latest
     environment:
       DbProvider: mysql
-      ConnectionStrings__DefaultConnection: Server=laravel-mysql;Database=produit;Username=root;Password=Not24get;
+      ConnectionStrings__DefaultConnection: Server=laravel-mysql;Database=produits;Username=root;Password=Not24get;
     ports:
       - "8095:8080"
     networks:

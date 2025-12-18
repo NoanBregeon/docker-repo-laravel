@@ -1,14 +1,14 @@
-CREATE database IF NOT EXISTS forecast;
-USE forecast;
-CREATE TABLE IF NOT EXISTS forecasts (
-    id char(36) NOT NULL PRIMARY KEY,
-    city varchar(255) NOT NULL,
-    temperate FLOAT NOT NULL DEFAULT 0
+CREATE database IF NOT EXISTS produits;
+USE produits;
+CREATE TABLE IF NOT EXISTS produits (
+    id int NOT NULL PRIMARY KEY,
+    nom varchar(255) NOT NULL,
+    prix decimal(10,2) NOT NULL
 );
 
-INSERT INTO forecasts VALUES
-    ('e86ee917-e973-46b6-8fbd-773a982676d1', 'Saint-Nazaire', 11),
-    ('b0f4b35a-5140-4b5e-9304-4473c8991148', 'Saint-Berthevin', 9),
-    ('7bdd8bff-f4f6-45d4-9a53-88de91ad289f', 'Paris', 50.4),
-    ('0212d319-e470-4546-8938-d844f5a0137c', 'Lille', -12.79)
+INSERT INTO produits VALUES
+    (1, 'deo', 2.99),
+    (2, 'pain ', 0.99 ),
+    (3, 'oeuf', 3.49 ),
+    (4, 'fromage', 4.99 )
 ;
