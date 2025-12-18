@@ -15,10 +15,7 @@ services:
       - compose-network
   laravel-app:
     container_name: laravel-app
-    image: julespecquereau/laravel-eval:test
-    environment:
-      DbProvider: mysql
-      ConnectionStrings__DefaultConnection: Server=laravel-mysql;Database=produits;Username=root;Password=Not24get;
+    image: julespecquereau/laravel-app:test
     ports:
       - "8095:8080"
     networks:
