@@ -12,7 +12,7 @@ class ProduitsSeeder extends Seeder
      */
     public function run(): void
     {
-        \DB::table('produits')->insert([
+        \DB::table('produits_table')->insert([
             ['nom' => 'deo', 'prix' => 2.99],
             ['nom' => 'pain', 'prix' => 0.99],
             ['nom' => 'oeuf', 'prix' => 3.49],

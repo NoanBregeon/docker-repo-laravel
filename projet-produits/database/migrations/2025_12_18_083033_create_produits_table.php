@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produits', function (Blueprint $table) {
+        Schema::create('produits_table', function (Blueprint $table) {
             $table->id(); // crée un BIGINT UNSIGNED AUTO_INCREMENT nommé 'id'
             $table->string('nom');
             $table->decimal('prix', 10, 2);
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('produits');
+        Schema::dropIfExists('produits_table');
     }
 };

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $table = 'produits';
+    protected $table = 'produits_table';
     public $timestamps = false;
 
     // SANS CETTE LIGNE, LE "CREATE" NE MARCHERA PAS
