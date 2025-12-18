@@ -2,6 +2,8 @@
 # Met à jour les images Docker avant de démarrer
 docker-compose pull
 
+php artisan key:generate --no-interaction --force
+
 # On attend que le service "mysql" réponde sur le port 3306
 while ! nc -z mysql 3306; do
 	echo "Attente de MySQL..."
