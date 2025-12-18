@@ -60,3 +60,15 @@ jobs:
           file: ./projet-produits/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:latest
+
+  
+  github-runner:
+    name: Github runner 
+    runs-on: self-hosted
+    needs: dockerhub
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: docker compose up
+        working-directory: ./projet-produits
+        run: docker compose up -d
