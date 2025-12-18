@@ -7,6 +7,5 @@ COPY . .
 COPY .env .env
 RUN docker-php-ext-install pdo pdo_mysql
 RUN composer update
-RUN php artisan migrate:fresh --seed
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
 EXPOSE 8080
