@@ -18,6 +18,8 @@ services:
     image: julespecquereau/laravel-app:latest
     ports:
       - "8095:8080"
+    depends_on:
+      - mysql
     networks:
       - compose-network
 networks:
