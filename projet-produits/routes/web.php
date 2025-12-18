@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Remplace la route '/' existante par celle-ci
-Route::get('/', [ProductController::class, 'index']);
+Route::get('/', [ProductController::class, 'welcome']);
 
 
 
