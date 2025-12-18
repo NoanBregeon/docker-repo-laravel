@@ -15,17 +15,7 @@ services:
       - compose-network
   laravel-app:
     container_name: laravel-app
-    image: julespecquereau/laravel-app:latest
-    # --- AJOUT DES VARIABLES ICI ---
-    environment:
-      - DB_CONNECTION=mysql
-      - DB_HOST=laravel-mysql # <--- Indispensable pour que Laravel trouve MySQL
-      - DB_PORT=3306
-      - DB_DATABASE=produits
-      - DB_USERNAME=root
-      - DB_PASSWORD=Not24get
-      - SESSION_DRIVER=file   # <--- On utilise les fichiers plutôt que la DB pour les sessions
-    # -------------------------------
+    image: julespecquereau/laravel-app:test
     ports:
       - "8095:8080"
     depends_on:
