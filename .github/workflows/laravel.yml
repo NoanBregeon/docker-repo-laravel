@@ -57,6 +57,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile # Vérifie le chemin du Dockerfile de ton binôme
+          file: .projet-produits/Dockerfile # Vérifie le chemin du Dockerfile de ton binôme
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:latest
