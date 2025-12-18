@@ -9,6 +9,9 @@ on:
 jobs:
   laravel-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./projet-produits
 
     steps:
     - uses: actions/checkout@v4
